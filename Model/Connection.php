@@ -8,7 +8,7 @@ use PDOException;
 class Connection{
     private $stmt;
     
-    private static function getInstance(): PDO{  
+    public static function getInstance(): PDO{  
         if(empty(self::$stmt)){
             try{
                 self::$stmt = new PDO('mysql:host='. DB_HOST. ';port'.DB_PORT . ';dbname='. DB_NAME .'', DB_USER, DB_PASSWORD);
