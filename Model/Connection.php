@@ -6,7 +6,7 @@ require_once __DIR__. '/../Config/configuration.php';
 use PDO;
 use PDOException;   
 class Connection{
-    private $stmt;
+    public static $stmt;
     
     public static function getInstance(): PDO{  
         if(empty(self::$stmt)){

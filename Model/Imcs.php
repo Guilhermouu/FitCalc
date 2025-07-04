@@ -1,4 +1,6 @@
 <?php
+namespace Model;
+
 use Model\Connection;
 
 use PDO;
@@ -10,8 +12,7 @@ class Imcs{
     $this->db=Connection::getInstance();
 
     }
-    public function createImc($weight,$height,$result):PDO
-    {
+    public function createImc($weight,$height,$result): bool|string{
     try{
 
     $sql= "INSERT INTO imcs(weight, height, result, created_at) VALUES(:weight, :height, :result, NOW())";
@@ -26,6 +27,7 @@ class Imcs{
 // Verficicação de inserção de dados
     if ($execute){
         return true;
+        
     }else{
         echo"Erro na criação de do IMC";
         return false;

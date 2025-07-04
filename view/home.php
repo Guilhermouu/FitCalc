@@ -1,3 +1,30 @@
+<?php
+session_start();
+require_once '../vendor/autoload.php';
+
+use Controller\ImcController;
+
+$imcController= new ImcController();
+
+use Model\Imcs;
+$imcResult=null;
+
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(isset($_POST["weight"], $_POST["height"])){
+    $weight = $_POST["weight"];
+    $height = $_POST["height"];
+
+    // $result = round($weight / ($height * $height),2);
+
+    $imcResult= $imcController->calculateIMC($weight, $height); 
+
+    if($imcResult["BMIrange"] != "Por favor, informe seu peso e altura."){
+        $imcController->saveIMC($weight, $height, $imcResult["imc"]);
+    }
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -109,6 +136,13 @@
                 <div class="result">
                     <div class="result__info">
                         <!-- RESULTADO DO CALCULO -->
+                         <?php if($imcResult):?>
+                            <p>Resultado:<?php echo $imcResult["imc"] ?></p>
+                            <p>Categoria:<?php echo $imcResult["BMIrange"]?></p>
+                            <?php else:?>
+                                <i class="bi bi-calculator"></i>
+                                <p>Preencha os dados para obter os resultados.</p>
+                            <?php endif;?>
                     </div>
                 </div>
             </div>
